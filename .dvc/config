@@ -1,0 +1,4 @@
+[core]
+    remote = my_storage
+['remote "my_storage"']
+    url = D:/data/education/mipt_nvidia/mle/dvc_storage
