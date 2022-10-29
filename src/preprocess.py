@@ -18,19 +18,21 @@ class DataMaker():
         self.config = configparser.ConfigParser()
         self.log = logger.get_logger(__name__)
         self.project_path = os.path.join(os.getcwd(), "data")
-        self.data_path = os.path.join(self.project_path, "Iris.csv")
-        self.X_path = os.path.join(self.project_path, "Iris_X.csv")
-        self.y_path = os.path.join(self.project_path, "Iris_y.csv")
-        self.train_path = [os.path.join(self.project_path, "Train_Iris_X.csv"), os.path.join(
-            self.project_path, "Train_Iris_y.csv")]
-        self.test_path = [os.path.join(self.project_path, "Test_Iris_X.csv"), os.path.join(
-            self.project_path, "Test_Iris_y.csv")]
+        self.data_path = os.path.join(self.project_path, "penguins_size.csv")
+        self.X_path = os.path.join(self.project_path, "penguins_X.csv")
+        self.y_path = os.path.join(self.project_path, "penguins_y.csv")
+        self.train_path = [os.path.join(self.project_path, "Train_penguins_X.csv"), os.path.join(
+            self.project_path, "Train_penguins_y.csv")]
+        self.test_path = [os.path.join(self.project_path, "Test_penguins_X.csv"), os.path.join(
+            self.project_path, "Test_penguins_y.csv")]
         self.log.info("DataMaker is ready")
 
     def get_data(self) -> bool:
         dataset = pd.read_csv(self.data_path)
-        X = pd.DataFrame(dataset.iloc[:, 1:5].values)
-        y = pd.DataFrame(dataset.iloc[:, 5:].values)
+        dataset['is_male'] = dataset['sex'].map( {'MALE':1, 'FEMALE':0} )
+        dataset = dataset.dropna()  # drop all the null values
+        X = dataset[['culmen_length_mm', 'culmen_depth_mm', 'flipper_length_mm', 'body_mass_g', 'is_male']]
+        y = dataset['species']
         X.to_csv(self.X_path, index=True)
         y.to_csv(self.y_path, index=True)
         if os.path.isfile(self.X_path) and os.path.isfile(self.y_path):
