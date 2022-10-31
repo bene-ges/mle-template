@@ -1,5 +1,4 @@
 [core]
-    remote = remote_storage
-    autostage = true
-['remote "remote_storage"']
-    url = D:\MLE\4-5\dvc_remote
+    remote = my_storage
+['remote "my_storage"']
+    url = D:/data/education/mipt_nvidia/mle/dvc_storage
